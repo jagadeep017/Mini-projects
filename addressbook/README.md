@@ -1,8 +1,8 @@
-#Address Book
+# Address Book
 
 This project implements a simple addressbook tool that can add contacts , edit contacts or delete contacts in a database(.txt file).
 
-##Files
+## Files
 `contact.c`: Implementation of contact-related functions.
 
 `contact.h`: Header file for contact.c.
@@ -20,7 +20,7 @@ This project implements a simple addressbook tool that can add contacts , edit c
 `populate.h`: Header file for populate.c.
 
 
-##Usage
+## Usage
 
 To build the project, navigate to the addressbook directory and run:
 ```
