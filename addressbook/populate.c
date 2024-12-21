@@ -1,7 +1,7 @@
 #include "contact.h"
 #include <stdio.h>
-// Dummy contact data
-static Contact dummyContacts[] = {
+
+static Contact dummyContacts[] = {      //10 dummy contacts
     {"John Doe", "1234567890", "john@example.com"},
     {"Alice Smith", "0987654321", "alice@example.com"},
     {"Bob Johnson", "1112223333", "bob@company.com"},
@@ -14,7 +14,7 @@ static Contact dummyContacts[] = {
     {"Ian Lewis", "8889990000", "ian@example.com"}
 };
 
-void populateAddressBook(AddressBook* addressBook)
+void populateAddressBook(AddressBook* addressBook)  //Populate address book with dummy contacts
 {
     printf("Loading Dummy Contacts :\n");
     int numDummyContacts = sizeof(dummyContacts) / sizeof(dummyContacts[0]);

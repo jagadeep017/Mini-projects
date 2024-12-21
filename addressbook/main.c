@@ -9,7 +9,7 @@ int main() {
     listContacts(&temp, 4);
     
     do {
-        printf("\nAddress Book Menu:\n");
+        printf("\nAddress Book Menu:\n");   //menu
         printf("1. Create contact\n");
         printf("2. Search contact\n");
         printf("3. Edit contact\n");
@@ -18,7 +18,6 @@ int main() {
         printf("6. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-        
         switch (choice) {
             case 1:
                 createContact(&addressBook);
@@ -56,6 +55,5 @@ int main() {
         }
     } while (choice != 6);
     
-    //cleanup(); // Cleanup any resources before exiting
     return 0;
 }
