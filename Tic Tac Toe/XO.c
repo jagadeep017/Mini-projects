@@ -136,6 +136,7 @@ int main() {
     sleep(1);
     while(check(&game)==0){                //checking the winner
         system("clear");
+        printf("Use ENTER key to traverse the board\n");
         printf("%s's turn(%c)\n",game.player[game.cnt%2],game.current);
         print(&game);
         game.choice=getchar();                  //taking the input
