@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-/* Perform the decoding */
-Status do_decoding(EncodeInfo *encInfo);//done
+//function to decode the encoded data
+Status do_decoding(EncodeInfo *encInfo);
 
 //functionj to decode magic string
 Status decoding_ms(EncodeInfo *encInfo);
