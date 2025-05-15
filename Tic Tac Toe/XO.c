@@ -34,24 +34,24 @@ int check(struct games *game){  //function to check the winner return 1 if winne
     int i=0,j=0;
 
     for(i=0;i<game->size;i++){
-            if((game->arr[i][0]=='X' && game->arr[i][1]=='X' && game->arr[i][2]=='X')||(game->arr[i][0]=='O' && game->arr[i][1]=='O' && game->arr[i][2]=='O')){
-                game->winner[0][0]=i;       //storing the winner's position
-                game->winner[0][1]=0;
-                game->winner[1][0]=i;
-                game->winner[1][1]=1;
-                game->winner[2][0]=i;
-                game->winner[2][1]=2;
-                return 1;
-            }
-            if((game->arr[0][i]=='X' && game->arr[1][i]=='X' && game->arr[2][i]=='X')||(game->arr[0][i]=='O' && game->arr[1][i]=='O' && game->arr[2][i]=='O')){
-                game->winner[0][0]=0;       //storing the winner's position
-                game->winner[0][1]=i;
-                game->winner[1][0]=1;
-                game->winner[1][1]=i;
-                game->winner[2][0]=2;
-                game->winner[2][1]=i;
-                return 1;
-            }
+        if((game->arr[i][0]=='X' && game->arr[i][1]=='X' && game->arr[i][2]=='X')||(game->arr[i][0]=='O' && game->arr[i][1]=='O' && game->arr[i][2]=='O')){
+            game->winner[0][0]=i;       //storing the winner's position
+            game->winner[0][1]=0;
+            game->winner[1][0]=i;
+            game->winner[1][1]=1;
+            game->winner[2][0]=i;
+            game->winner[2][1]=2;
+            return 1;
+        }
+        if((game->arr[0][i]=='X' && game->arr[1][i]=='X' && game->arr[2][i]=='X')||(game->arr[0][i]=='O' && game->arr[1][i]=='O' && game->arr[2][i]=='O')){
+            game->winner[0][0]=0;       //storing the winner's position
+            game->winner[0][1]=i;
+            game->winner[1][0]=1;
+            game->winner[1][1]=i;
+            game->winner[2][0]=2;
+            game->winner[2][1]=i;
+            return 1;
+        }
     }
 
     if((game->arr[0][0]=='X' && game->arr[1][1]=='X' && game->arr[2][2]=='X')||(game->arr[0][0]=='O' && game->arr[1][1]=='O' && game->arr[2][2]=='O')){
@@ -77,20 +77,14 @@ int check(struct games *game){  //function to check the winner return 1 if winne
 
 //function to print the board takes the address of game structure as input
 void print(struct games *game){
-    short int temp=game->offset;        //variable to store the offset
-    short int flag=0;            //flag to check the winner
-
+    short int temp = game->offset;        //variable to store the offset
+    char index = 0;
     printf("|~~~|~~~|~~~|\n");
     for(int i=0;i<game->size;i++){
         for(int j=0;j<game->size;j++){
-            for(int k=0;k<3;k++){
-                if(i==game->winner[k][0]&&j==game->winner[k][1]){
-                    printf("|-%c-",game->arr[i][j]);
-                    flag=1;
-                }
-            }
-            if(flag){
-                flag=0;
+            if(i == game->winner[index][0] && j == game->winner[index][1]){
+                printf("|\033[0;32m-%c-\033[0m",game->arr[i][j]);           //print winning blocks with green highlighting
+                index++;
                 continue;
             }
             if(j==temp){
@@ -108,7 +102,7 @@ void print(struct games *game){
 
 int main() {
 
-    struct games game={3,{"X","O"},'O','\0',{' ',' ',' ',' ',' ',' ',' ',' ',' '},{30,30,30,30,30,30},0,0}; //initializing the game data
+    struct games game={3,{"X","O"},'O','\0',{' ',' ',' ',' ',' ',' ',' ',' ',' '},{-1,-1,-1,-1,-1,-1},0,0}; //initializing the game data
 
     printf("welcome to tik-tac-toe\n");                 //welcome message
     printf("Enter the name of player 1 : ");        //input player names
@@ -124,7 +118,7 @@ int main() {
     {
         system("clear");
         printf("invalid input\n");                  //if input is invalid
-        printf("player %s please choose X or O\n",game.player[0]); 
+        printf("player %s please choose X or O\n",game.player[0]);
         scanf("%c",&game.current);                  //taking input again
         if(game.current>='a'&&game.current<='z'){
         game.current=game.current-32;
@@ -133,7 +127,6 @@ int main() {
     getchar();
     printf("press enter to continue\n");
     getchar();
-    sleep(1);
     while(check(&game)==0){                //checking the winner
         system("clear");
         printf("Use ENTER key to traverse the board\n");
@@ -156,7 +149,7 @@ int main() {
         if(game.choice==game.current){              //if the input is valid
             if(game.arr[game.offset/game.size][game.offset%game.size]=='X'||game.arr[game.offset/game.size][game.offset%game.size]=='O'){   //if the space is already taken
                 printf("space is already taken by %c\n",game.arr[game.offset/game.size][game.offset%game.size]);
-                game.offset=-1;                     
+                game.offset=-1;
                 sleep(1);
                 continue;
             }
@@ -182,6 +175,10 @@ int main() {
             game.current='X';
         }
         if(game.cnt==8){                    //if the game is draw just print the board and exit
+            if(check(&game)){               //check if there is a victory at the end
+                game.cnt++;
+                break;
+            }
             system("clear");
             printf("Game ended with DRAW\n");
             print(&game);
@@ -192,7 +189,7 @@ int main() {
     if(game.current=='X'){              //changing back player to declare the winner
         game.current='O';
     }
-    else{                               
+    else{
         game.current='X';
     }
     game.cnt++;
@@ -200,4 +197,4 @@ int main() {
     printf("Game ended with %s(%c)'s win\n",game.player[game.cnt%2],game.current);  //print the winner
     print(&game);               //print the board
     return 0;               //exit the program
-}   
+}
